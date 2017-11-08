@@ -1,0 +1,27 @@
+{
+    "name": "oaklabs/phalcon-throttler",
+    "description": "Rate limiter PHP Phalcon Framework.",
+    "keywords": ["phalcon", "rate limiter", "throttler"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "OakLabs GmbH",
+            "email": "development@oak-labs.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "ext-phalcon": ">=3.1.2"
+    },
+    "require-dev": {
+        "phalcon/incubator": "dev-master",
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "MicheleAngioni\\PhalconThrottler\\": "src/PhalconThrottler"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
