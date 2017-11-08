@@ -1,6 +1,6 @@
 <?php
 
-namespace MicheleAngioni\PhalconThrottler\Tests;
+namespace OakLabs\PhalconThrottler\Tests;
 
 use Phalcon\Di;
 use Phalcon\Test\UnitTestCase as PhalconTestCase;
@@ -40,6 +40,13 @@ abstract class TestCase extends PhalconTestCase
 
             return $security;
         }, true);
+
+        $di->setShared('redis', function () {
+            $redis = new \Redis();
+            $redis->pconnect('localhost', 6379);
+
+            return $redis;
+        });
 
         $this->setDi($di);
 
