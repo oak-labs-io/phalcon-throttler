@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MicheleAngioni\\PhalconThrottler\\": "src/PhalconThrottler"
+            "OakLabs\\PhalconThrottler\\": "src/PhalconThrottler"
         }
     },
     "minimum-stability": "dev",
