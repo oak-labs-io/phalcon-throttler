@@ -3,7 +3,7 @@
 [![License](https://poser.pugx.org/oaklabs/phalcon-throttler/license)](https://packagist.org/packages/oaklabs/phalcon-throttler)
 [![Latest Stable Version](https://poser.pugx.org/oaklabs/phalcon-throttler/v/stable)](https://packagist.org/packages/oaklabs/phalcon-throttler)
 [![Latest Unstable Version](https://poser.pugx.org/oaklabs/phalcon-throttler/v/unstable)](https://packagist.org/packages/oaklabs/phalcon-throttler)
-[![Build Status](https://travis-ci.org/micheleangioni/phalcon-throttler.svg)](https://travis-ci.org/micheleangioni/phalcon-throttler)
+[![Build Status](https://travis-ci.org/oak-labs-io/phalcon-throttler.svg)](https://travis-ci.org/oak-labs-io/phalcon-throttler)
 
 ## Introduction
 
