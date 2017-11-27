@@ -69,7 +69,7 @@ if ($rateLimit->isLimited()) {
 
 ### Strategies
 
-The only question that remains is: which one is the appropriate place where the check should be performed?
+The only question left is: which one is the appropriate place where the check should be performed?
 
 There is of course not an uniquely valid answer, several places can be used. 
 
@@ -77,7 +77,7 @@ There is of course not an uniquely valid answer, several places can be used.
 
 A good strategy is to put the check during the Phalcon dispatcher lifecycle.
 
-In the depencency injection we can use the Phalcon Event Manager to listen to the dispatcher event and bind it to some Security plugin
+In the dependency injection we can use the Phalcon Event Manager to listen to the dispatcher event and bind it to some Security plugin
 
 ```php
 $di->setShared('eventsManager',function() use ($di) {
@@ -141,8 +141,8 @@ The information returned by the `$rateLimit->toArray()` method contains:
     'hits' => (int) // Number of hits in the reference period,
     'remaining' =>(int) // Remaining hits before getting rate limited,
     'period' => (int) // Reference period in seconds,
-    'hits_per_period' => (int) // Allower number of hits allowed in the reference period,
-    'warning' => (bool) // Whether a warning is emitted,
+    'hits_per_period' => (int) // Allowed number of hits in the reference period,
+    'warning' => (bool) // Whether a warning has been emitted,
     'limited' => (bool) // Whether the User is rate limited
 ]
 ```
