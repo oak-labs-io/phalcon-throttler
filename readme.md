@@ -42,7 +42,7 @@ We can set it up in the Dependency Injection container as well
 
 ```php
 $di->setShared('throttler',function() use ($di) {
-    return new OakLabs\PhalconThrottler($di->get('redis'), [
+    return new OakLabs\PhalconThrottler\RedisThrottler($di->get('redis'), [
         'bucket_size'  => 20,
         'refill_time'  => 600, // 10m
         'refill_amount'  => 10
