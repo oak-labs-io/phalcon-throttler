@@ -5,21 +5,29 @@ namespace OakLabs\PhalconThrottler;
 class RateLimit
 {
     /**
+     * Number of successful hits.
+     *
      * @var int
      */
     private $hits;
 
     /**
+     * Number of remaining hits before getting banned.
+     *
      * @var int
      */
     private $remaining;
 
     /**
+     * Period for each refillment.
+     *
      * @var int
      */
     private $period;
 
     /**
+     * Maximum number of available hits for a full bucket.
+     *
      * @var int
      */
     private $hitsPerPeriod;
