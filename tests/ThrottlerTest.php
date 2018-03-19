@@ -19,9 +19,10 @@ class ThrottlerTest extends TestCase
         $redis = $this->getDI()->get('redis');
 
         $throttler = new RedisThrottler($redis, [
-            'bucket_size'  => 2,
+            'bucket_size'  => 3,
             'refill_time'  => 2, // 10s
-            'refill_amount'  => 1
+            'refill_amount'  => 1,
+            'warning_limit' => 1
         ]);
 
         $meterId = 'my-meter-id-1';
@@ -31,25 +32,37 @@ class ThrottlerTest extends TestCase
 
         $this->assertInstanceOf(RateLimit::class, $rateLimit);
         $this->assertEquals(1, $rateLimit->getHits());
-        $this->assertEquals(2, $rateLimit->getHitsPerPeriod());
+        $this->assertEquals(3, $rateLimit->getHitsPerPeriod());
+        $this->assertEquals(2, $rateLimit->getRemaining());
+        $this->assertFalse($rateLimit->isWarning());
+        $this->assertFalse($rateLimit->isLimited());
+
+        // Consume 2nd time
+        $rateLimit = $throttler->consume($meterId);
+
+        $this->assertInstanceOf(RateLimit::class, $rateLimit);
+        $this->assertEquals(2, $rateLimit->getHits());
+        $this->assertEquals(3, $rateLimit->getHitsPerPeriod());
         $this->assertEquals(1, $rateLimit->getRemaining());
+        $this->assertTrue($rateLimit->isWarning());
         $this->assertFalse($rateLimit->isLimited());
 
-        // Consume 2st time
+        // Consume 3rd time
         $rateLimit = $throttler->consume($meterId);
 
         $this->assertInstanceOf(RateLimit::class, $rateLimit);
-        $this->assertEquals(2, $rateLimit->getHits());
-        $this->assertEquals(2, $rateLimit->getHitsPerPeriod());
+        $this->assertEquals(3, $rateLimit->getHits());
+        $this->assertEquals(3, $rateLimit->getHitsPerPeriod());
         $this->assertEquals(0, $rateLimit->getRemaining());
+        $this->assertTrue($rateLimit->isWarning());
         $this->assertFalse($rateLimit->isLimited());
 
-        // Consume 3st time
+        // Consume 4th time
         $rateLimit = $throttler->consume($meterId);
 
         $this->assertInstanceOf(RateLimit::class, $rateLimit);
-        $this->assertEquals(2, $rateLimit->getHits());
-        $this->assertEquals(2, $rateLimit->getHitsPerPeriod());
+        $this->assertEquals(3, $rateLimit->getHits());
+        $this->assertEquals(3, $rateLimit->getHitsPerPeriod());
         $this->assertEquals(0, $rateLimit->getRemaining());
         $this->assertTrue($rateLimit->isLimited());
 
@@ -60,9 +73,10 @@ class ThrottlerTest extends TestCase
         $rateLimit = $throttler->consume($meterId);
 
         $this->assertInstanceOf(RateLimit::class, $rateLimit);
-        $this->assertEquals(2, $rateLimit->getHits());
-        $this->assertEquals(2, $rateLimit->getHitsPerPeriod());
+        $this->assertEquals(3, $rateLimit->getHits());
+        $this->assertEquals(3, $rateLimit->getHitsPerPeriod());
         $this->assertEquals(0, $rateLimit->getRemaining());
+        $this->assertTrue($rateLimit->isWarning());
         $this->assertFalse($rateLimit->isLimited());
 
         $redis->del(sprintf('rate_limiter:%s', $meterId));

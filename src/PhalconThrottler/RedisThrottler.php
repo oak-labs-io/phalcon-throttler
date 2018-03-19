@@ -33,7 +33,8 @@ class RedisThrottler implements ThrottlerInterface
         $this->config = array_merge([
             'bucket_size'  => 20,
             'refill_time'  => 600, // 10m
-            'refill_amount'  => 10
+            'refill_amount'  => 10,
+            'warning_limit' => 1
         ], $config);
 
         $this->redis = $redis;
@@ -87,7 +88,7 @@ class RedisThrottler implements ThrottlerInterface
             $newValue -= $numTokens;
         }
 
-        if ($newValue <= $this->limitWarning) {
+        if ($newValue <= $this->config['warning_limit']) {
             $this->limitWarning = true;
         }
 
